@@ -16,6 +16,55 @@ A class should have only one reason to change, meaning it should have only one r
 
 ![alt text](https://github.com/alidehkhodaei/solid-principles/raw/main/photos/srp.png)
 
+Before:
+```kotlin
+class EmployeeDatabaseAdmin(
+    override val name: String,
+    override val totalHoursWorked: Double
+) : BaseEmployee {
+
+    fun save() {
+        try {
+            // Implementation code removed for better clarity
+            // Save to database.
+            // Use try-catch because it may throw exception.
+        } catch (e: Exception) {
+            // ❌ This class violates the Single Responsibility Principle because it has two tasks.
+            File("logFile.txt").writeText(e.message!!)
+        }
+    }
+    
+    override fun work() {
+        // Implementation code removed for better clarity
+    }
+
+}
+
+```
+After:
+```kotlin
+class EmployeeDatabaseAdmin(
+    override val name: String,
+    override val totalHoursWorked: Double
+) : BaseEmployee {
+
+    fun save() {
+        try {
+            // Implementation code removed for better clarity
+            // Save to database.
+            // Use try-catch because it may throw exception.
+        } catch (e: Exception) {
+            ✅ Ok
+            val logger=FileLogger("logFile")
+            logger.logError(e.message!!)
+        }
+    }
+    override fun work() {
+        // Implementation code removed for better clarity
+    }
+}
+```
+
 
 ## ✅Open/Closed Principle (Ocp):
 Software entities (classes, modules, functions, etc.) should be open for extension but closed for modification.
