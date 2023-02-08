@@ -71,6 +71,62 @@ Software entities (classes, modules, functions, etc.) should be open for extensi
 
 ![alt text](https://github.com/alidehkhodaei/solid-principles/raw/main/photos/ocp.png)
 
+Before:
+```kotlin
+class EmployeeFinances(override val name: String, override val totalHoursWorked: Double) : BaseEmployee {
+
+     fun calculatePay(typeEmployee: TypeEmployee, id :Int) {
+        if (typeEmployee == TypeEmployee.FULL_TIME) {
+            // Implementation code removed for better clarity
+        } else if (typeEmployee == TypeEmployee.PART_TIME) {
+            // Implementation code removed for better clarity
+        } else if (typeEmployee == TypeEmployee.CONTRACTOR) {
+             // Implementation code removed for better clarity
+        } else {
+            // Implementation code removed for better clarity
+        }
+    }
+    
+  enum class TypeEmployee{FULL_TIME,PART_TIME,CONTRACTOR}
+}
+
+```
+After:
+
+We don't need enum after refactoring, so delete it.
+```kotlin
+interface EmployeeFinances : BaseEmployee {
+     fun calculatePay(id: Int)
+}
+
+class EmployeeFinancesForContractor(override val name: String, override val totalHoursWorked: Double) : EmployeeFinances {
+    override fun calculatePay(id: Int) {
+        // Implementation code removed for better clarity
+    }
+    override fun work() {
+        // Implementation code removed for better clarity
+    }
+}
+
+class EmployeeFinancesForFTE(override val name: String, override val totalHoursWorked: Double) : EmployeeFinances {
+    override fun calculatePay(id: Int) {
+        // Implementation code removed for better clarity
+    }
+    override fun work() {
+        // Implementation code removed for better clarity
+    }
+}
+
+class EmployeeFinancesForPTE(override val name: String, override val totalHoursWorked: Double) : EmployeeFinances {
+   override fun calculatePay(id: Int) {
+        // Implementation code removed for better clarity
+    }
+    override fun work() {
+        // Implementation code removed for better clarity
+    }
+ }
+
+```
 
 ## ✅Liskov’s Substitution Principle (Lsp):
 Subtypes must be replaceable with their base types without affecting the correctness of the program.
