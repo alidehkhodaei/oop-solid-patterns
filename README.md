@@ -129,9 +129,49 @@ class EmployeeFinancesForPTE(override val name: String, override val totalHoursW
 ```
 
 ## ✅Liskov’s Substitution Principle (Lsp):
-Subtypes must be replaceable with their base types without affecting the correctness of the program.
+Subtypes must be replaceable with their base types without affecting the correctness of the program. Overridng methods does not violate the Liskov Substitution Principle (LSP) because it does not change the behavior or functionality of the parent class. Overriding is simply replacing the implementation of a method from the parent class with a different implementation in the child class.
 
 ![alt text](https://github.com/alidehkhodaei/solid-principles/raw/main/photos/lsp.png)
+
+Before:
+```kotlin
+class EmployeeFinancesForFTE(override val name: String, override val totalHoursWorked: Double) : EmployeeFinances {
+    // ❌ A violation of the LSP (Liskov Substitution Principle) occurs when I use an instance of 'EmployeeFinancesForFTE'
+    instead of 'EmployeeFinances', causing the program to behave incorrectly when the ID is negative.
+    override fun calculatePay(id: Int) {
+        if (id < 0) {
+            throw IllegalArgumentException()
+        }
+        // Other implementation
+    }
+
+    override fun calculateRewards(id: Int) {
+        // Implementation code removed for better clarity
+    }
+
+    override fun work() {
+        // Implementation code removed for better clarity
+    }
+}
+```
+
+After:
+```kotlin
+class EmployeeFinancesForFTE(override val name: String, override val totalHoursWorked: Double) : EmployeeFinances {
+    // ✅ We can substitute 'EmployeeFinancesForFTE' for 'EmployeeFinances' without affecting the program's correctness.
+    override fun calculatePay(id: Int) {
+        // Implementation code removed for better clarity
+    }
+
+    override fun calculateRewards(id: Int) {
+        // Implementation code removed for better clarity
+    }
+
+    override fun work() {
+        // Implementation code removed for better clarity
+    }
+}
+```
 
 ## ✅Interface Segregation Principle (Isp):
 Clients should not be forced to depend on interfaces they do not use.
