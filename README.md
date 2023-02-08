@@ -282,7 +282,7 @@ High-level modules should not depend on low-level modules, both should depend on
 ❌ Problem: Suppose we have another logger class, then should we create another class like EmployeeDatabaseAdmin again?
 
 This class basically only depends on FileLogger, but what if we need DatabaseLogger?
-```
+
 Before:
 ```kotlin
 class EmployeeDatabaseAdmin(
@@ -324,6 +324,8 @@ class DatabaseLogger(override val name: String) : ILogger {
     }
 }
 
+```
+ 
 ```kotlin
 class EmployeeDatabaseAdmin(
     override val name: String,
