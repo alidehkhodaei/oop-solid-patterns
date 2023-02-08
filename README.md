@@ -136,8 +136,8 @@ Subtypes must be replaceable with their base types without affecting the correct
 Before:
 ```kotlin
 class EmployeeFinancesForFTE(override val name: String, override val totalHoursWorked: Double) : EmployeeFinances {
-    // ❌ A violation of the LSP (Liskov Substitution Principle) occurs when I use an instance of 'EmployeeFinancesForFTE'
-    instead of 'EmployeeFinances', causing the program to behave incorrectly when the ID is negative.
+    /* ❌ A violation of the LSP (Liskov Substitution Principle) occurs when I use an instance of 'EmployeeFinancesForFTE'
+    instead of 'EmployeeFinances', causing the program to behave incorrectly when the ID is negative.*/
     override fun calculatePay(id: Int) {
         if (id < 0) {
             throw IllegalArgumentException()
@@ -176,7 +176,102 @@ class EmployeeFinancesForFTE(override val name: String, override val totalHoursW
 ## ✅Interface Segregation Principle (Isp):
 Clients should not be forced to depend on interfaces they do not use.
 
+Bad example
+```kotlin
+interface Animal {
+    fun fly()
+    fun swim()
+}
+```
+Good example
+```kotlin
+interface Flyable {
+    fun fly()
+}
+interface Swimmable  {
+    fun swim()
+}
+```
+
 ![alt text](https://github.com/alidehkhodaei/solid-principles/raw/main/photos/isp.png)
+
+
+Before:
+```kotlin
+interface EmployeeFinances : BaseEmployee {
+    fun calculatePay(id :Int)
+    fun calculateRewards(id :Int)
+
+}
+
+class EmployeeFinancesForContractor(override val name: String, override val totalHoursWorked: Double) : EmployeeFinances  {
+    override fun calculatePay(id :Int) {
+      // ❌ 
+    }
+    override fun calculateRewards(id :Int) {
+       // Implementation code removed for better clarity
+    }
+}
+class EmployeeFinancesForFTE(override val name: String, override val totalHoursWorked: Double) : EmployeeFinances {
+    override fun calculatePay(id :Int) {
+         // Implementation code removed for better clarity
+    }
+
+    override fun calculateRewards(id :Int) {
+         // Implementation code removed for better clarity
+    }
+
+}
+class EmployeeFinancesForPTE(override val name: String, override val totalHoursWorked: Double) : EmployeeFinances {
+     override fun calculatePay(id :Int) {
+           // Implementation code removed for better clarity
+     }
+
+     override fun calculateRewards(id :Int) {
+          // Implementation code removed for better clarity
+     }
+
+ }
+
+```
+
+
+After:
+```kotlin
+
+interface EmployeeReward : BaseEmployee {
+  fun calculateRewards(id :Int)
+}
+interface EmployeeFinances : EmployeeReward {
+    fun calculatePay(id :Int)
+}
+
+class EmployeeFinancesForContractor(override val name: String, override val totalHoursWorked: Double) : EmployeeReward {
+   override fun calculateRewards(id :Int) { 
+         // Implementation code removed for better clarity
+    }
+}
+class EmployeeFinancesForFTE(override val name: String, override val totalHoursWorked: Double) : EmployeeFinances {
+    override fun calculatePay(id :Int) {
+         // Implementation code removed for better clarity
+    }
+
+    override fun calculateRewards(id :Int) {
+          // Implementation code removed for better clarity
+    }
+
+}
+class EmployeeFinancesForPTE(override val name: String, override val totalHoursWorked: Double) : EmployeeFinances {
+     override fun calculatePay(id :Int) {
+           // Implementation code removed for better clarity
+     }
+
+     override fun calculateRewards(id :Int) {
+         // Implementation code removed for better clarity
+     }
+
+ }
+```
 
 ## ✅Dependency Inversion Principle (Dip):
 High-level modules should not depend on low-level modules, both should depend on abstractions.
