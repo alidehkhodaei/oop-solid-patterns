@@ -278,3 +278,67 @@ High-level modules should not depend on low-level modules, both should depend on
 
 ![alt text](https://github.com/alidehkhodaei/solid-principles/raw/main/photos/dip.png)
  
+ 
+❌ Problem: Suppose we have another logger class, then should we create another class like EmployeeDatabaseAdmin again?
+
+This class basically only depends on FileLogger, but what if we need DatabaseLogger?
+```
+Before:
+```kotlin
+class EmployeeDatabaseAdmin(
+    override val name: String,
+    override val totalHoursWorked: Double
+) : BaseEmployee {
+
+    fun save() {
+        try {
+            // Implementation code removed for better clarity
+            // Save to database.
+            // Use try-catch because it may throw exception.
+        } catch (e: Exception) {
+            val logger=FileLogger("logFile")
+            logger.logError(e.message!!)
+        }
+    }
+
+}
+```
+
+After:
+
+We create an ILogger interface and two classes implement it. This EmployeeDatabaseAdmin class works with any subclass of ILogger and depend on abstractions.
+
+ ```kotlin
+ interface ILogger {
+    val name: String
+    fun logError(message: String)
+}
+class FileLogger(override val name: String) : ILogger {
+    override fun logError(message: String) {
+        // Implementation code removed for better clarity
+    }
+}
+class DatabaseLogger(override val name: String) : ILogger {
+    override fun logError(message: String) {
+        // Implementation code removed for better clarity
+    }
+}
+
+```kotlin
+class EmployeeDatabaseAdmin(
+    override val name: String,
+    override val totalHoursWorked: Double,
+    private val logger: ILogger
+) : BaseEmployee {
+
+    fun save() {
+        try {
+            // Implementation code removed for better clarity
+            // Save to database.
+            // Use try-catch because it may throw exception.
+        } catch (e: Exception) {
+            logger.logError(e.message!!)
+        }
+    }
+}
+```
