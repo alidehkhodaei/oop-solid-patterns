@@ -1,5 +1,7 @@
 # Solid Principles
 
+![alt text](https://github.com/alidehkhodaei/solid-principles/raw/main/photos/solid.png)
+
 🔴The Solid Principles are a set of coding principles that provide a guide to writing maintainable, scalable, and robust software.
 These principles are often considered as best practices in object-oriented programming and software design, and are used to develop maintainable, scalable, and reusable software. 
 
@@ -7,9 +9,6 @@ These principles are often considered as best practices in object-oriented progr
 
 🔴Solid is primarily designed for object-oriented programming, but its principles can be applied to other programming paradigms as well.
 The Solid principles provide general guidelines for writing maintainable and scalable code, and they are not limited to a particular programming language or paradigm.
-
-![alt text](https://github.com/alidehkhodaei/solid-principles/raw/main/photos/solid.png)
-
 
 ## ✅Single Responsibility Principle (Srp):
 A class should have only one reason to change, meaning it should have only one responsibility.
