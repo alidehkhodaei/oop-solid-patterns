@@ -10,13 +10,4 @@ display: none;
 footer {
 visibility:hidden;
 }
-body{
-padding: 20px;
-}
-// Remove padding
-@media (min-width: 70em) {
-.main-content{
-padding: 0; 
-max-width: 90rem;
-}
-}
+
