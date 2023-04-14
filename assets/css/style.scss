@@ -7,6 +7,11 @@ display: none;
 footer {
 visibility:hidden;
 }
-#main_content_wrap{
- background: #fff; 
+
+// Remove padding
+@media (min-width: 70em) {
+.main-content{
+padding: 0; 
+max-width: 90rem;
+}
 }
