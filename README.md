@@ -1,4 +1,4 @@
-# Solid Principles
+<h1 id="my-title"> Solid Principles </h1>
 
 ![alt text](https://github.com/alidehkhodaei/solid-principles/raw/main/photos/solid.png)
 
