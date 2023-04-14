@@ -1,13 +1,12 @@
 ---
 ---
 @import "{{ site.theme }}";
-page-header{
-  background-color: #009999;
-}
 #my-title{
 display: none;
 }
 footer {
 visibility:hidden;
 }
-
+.main_content_wrap{
+ background: #fff; 
+}
