@@ -1,6 +1,9 @@
 ---
 ---
 @import "{{ site.theme }}";
+page-header{
+  background-color: #009999;
+}
 #my-title{
 display: none;
 }
