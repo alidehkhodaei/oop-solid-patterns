@@ -130,3 +130,69 @@ class PayCalculator(var currency: String) {
     }
 }
 ```
+
+## ✅Liskov’s Substitution Principle (Lsp): <a name="lsp"></a>
+Subtypes must be replaceable with their base types without affecting the correctness of the program. Overridng methods does not violate the Liskov Substitution Principle (LSP) because it does not change the behavior or functionality of the parent class. Overriding is simply replacing the implementation of a method from the parent class with a different implementation in the child class.
+
+![alt text](https://github.com/alidehkhodaei/solid-principles/raw/main/photos/lsp.png)
+
+Before:
+
+```kotlin
+open class Rectangle(var width: Int, var height: Int) {
+    open fun calculateArea(): Int {
+        return width * height
+    }
+}
+```
+```kotlin
+class Square(side: Int) : Rectangle(side, side) {
+
+    override fun calculateArea(): Int {
+        if (height != width)
+            throw IllegalArgumentException("The width and height of a square should be equal!")
+        return width * width
+    }
+}
+```
+
+```kotlin
+fun main() {
+    val rectangle: Rectangle = getDefaultRectangle()
+    rectangle.width = 7
+    rectangle.height = 8
+    println(rectangle.calculateArea())
+}
+
+private fun getDefaultRectangle(): Rectangle {
+    return Rectangle(3, 6)
+}
+
+private fun getDefaultSquare(): Rectangle {
+    return Square(3)
+}
+```
+The program encounters a problem when we replace the rectangle (`getDefaultRectangle`)
+with a square (`getDefaultSquare`).
+
+After:
+
+```kotlin
+interface Shape {
+    fun calculateArea(): Int
+}
+```
+```kotlin
+class Rectangle(var width: Int, var height: Int) : Shape {
+    override fun calculateArea(): Int {
+        return width * height
+    }
+}
+```
+```kotlin
+class Square(var side: Int) : Shape {
+    override fun calculateArea(): Int {
+        return side * side
+    }
+}
+```
