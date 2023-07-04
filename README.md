@@ -196,3 +196,91 @@ class Square(var side: Int) : Shape {
     }
 }
 ```
+## ✅Interface Segregation Principle (Isp): <a name="isp"></a>
+Clients should not be forced to depend on interfaces they do not use.
+LSP (Liskov Substitution Principle) means not to change the functionality of the super class,
+while ISP (Interface Segregation Principle) says if you don't need a method, remove it from your class.
+
+Bad example
+```kotlin
+interface Animal {
+    fun fly()
+    fun swim()
+}
+```
+Good example
+```kotlin
+interface Flyable {
+    fun fly()
+}
+interface Swimmable  {
+    fun swim()
+}
+```
+
+![alt text](https://github.com/alidehkhodaei/solid-principles/raw/main/photos/isp.png)
+
+Before:
+
+```kotlin
+interface Worker {
+    fun work()
+    fun eat()
+}
+```
+```kotlin
+class Robot(private val numberRobot:Int) : Worker {
+    override fun work() {
+        // Implementation code removed for better clarity.
+    }
+
+    override fun eat() {
+        // ❌ ISP (Interface Segregation Principle) violation occurs when a class does not need a method.
+        // This method is not applicable to a robot.
+        throw UnsupportedOperationException("Robots don't eat!")
+    }
+
+}
+
+
+class Human(private val name:String) : Worker {
+    override fun work() {
+        // Implementation code removed for better clarity.
+    }
+
+    override fun eat() {
+        // Implementation code removed for better clarity.
+    }
+}
+
+```
+
+After:
+
+```kotlin
+interface Workable {
+    fun work()
+}
+
+interface Eatable {
+    fun eat()
+}
+```
+```kotlin
+class Human(private val name:String) : Workable, Eatable {
+    override fun work() {
+        // Implementation code removed for better clarity.
+    }
+
+    override fun eat() {
+        // Implementation code removed for better clarity.
+    }
+}
+
+class Robot(private val numberRobot:Int) : Workable {
+    override fun work() {
+        // Implementation code removed for better clarity.
+    }
+}
+
+```
