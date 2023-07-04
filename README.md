@@ -66,3 +66,67 @@ class DatabaseManager(private val databaseName: String) {
 
 In this refactored code, the `DatabaseManager` class only focuses on saving data to the database, while the `FileLogger` class is responsible
 for logging errors. Each class now has a single responsibility, and any changes related to error logging won't affect the `DatabaseManager` class.
+
+## ✅Open/Closed Principle (Ocp): <a name="ocp"></a>
+Software entities (classes, modules, functions, etc.) should be open for extension but closed for modification.
+
+![alt text](https://github.com/alidehkhodaei/solid-principles/raw/main/photos/ocp.png)
+
+Before:
+
+```kotlin
+class PayCalculator(var currency: String) {
+
+    fun calculatePay(typeEmployee: TypeEmployee) {
+        if (typeEmployee == TypeEmployee.FULL_TIME) {
+            // Implementation code removed for better clarity
+        } else if (typeEmployee == TypeEmployee.PART_TIME) {
+            // Implementation code removed for better clarity
+        } else if (typeEmployee == TypeEmployee.CONTRACTOR) {
+            // Implementation code removed for better clarity
+        } else {
+            // Implementation code removed for better clarity
+        }
+    }
+
+    enum class TypeEmployee { FULL_TIME, PART_TIME, CONTRACTOR }
+}
+```
+- The class isn't closed for modification because modifications are needed whenever a new employee type is added.
+- The class isn't open for extension because you would need to modify the existing class and add new conditions to handle new employee types.
+
+After:
+
+We don't need enum after refactoring, so delete it.
+```kotlin
+interface Payable{
+    fun calculatePay()
+}
+```
+
+```kotlin
+class FullTimeEmployeePayable(var hoursWorked:Double) : Payable {
+    override fun calculatePay() {
+        // Implementation code removed for better clarity
+    }
+}
+class PartTimeEmployeePayable(var hourlyRate:Double) : Payable {
+    override fun calculatePay() {
+        // Implementation code removed for better clarity
+    }
+}
+class ContractorPayable(var projectDuration:Double) : Payable {
+    override fun calculatePay() {
+        // Implementation code removed for better clarity
+    }
+}
+```
+
+```kotlin
+class PayCalculator(var currency: String) {
+    fun calculatePay(payable: Payable) {
+        // Implementation code removed for better clarity
+        payable.calculatePay(currency)
+    }
+}
+```
