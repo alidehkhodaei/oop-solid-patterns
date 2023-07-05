@@ -284,3 +284,85 @@ class Robot(private val numberRobot:Int) : Workable {
 }
 
 ```
+
+
+
+
+
+
+## ✅Dependency Inversion Principle (Dip): <a name="dip"></a>
+High-level modules should not depend on low-level modules, both should depend on abstractions.
+
+![alt text](https://github.com/alidehkhodaei/solid-principles/raw/main/photos/dip.png)
+
+❌ Problem: Suppose we have another logger class, then should we create another class like `DatabaseManager` again?
+
+This class basically only depends on FileLogger, but what if we need DatabaseLogger?
+
+Before:
+
+```kotlin
+class DatabaseManager(private val databaseName: String) {
+
+    fun connectToDatabase(){
+        // Implementation code removed for better clarity.
+    }
+
+    fun saveDataToDatabase() {
+        try {
+            // Implementation code removed for better clarity.
+            // Perform some operation that may throw an exception.
+        } catch (e: Exception) {
+            val logger = FileLogger("logFile.txt")
+            logger.log(e.message!!)
+        }
+    }
+
+}
+```
+
+After:
+
+We create a `Logger` interface and two classes implement it. This `DatabaseManager` class works with any subclass of Logger and depend on abstractions.
+
+ ```kotlin
+interface Logger {
+    fun log(message: String)
+}
+
+class FileLogger(var fileName: String) : Logger {
+    override fun log(message: String) {
+        File(fileName).writeText(message)
+    }
+}
+
+class DatabaseLogger(var tableName: String) : Logger {
+    override fun log(message: String) {
+        // Implementation code removed for better clarity
+    }
+}
+```
+
+```kotlin
+class DatabaseManager(
+    private val databaseName: String,
+    private val logger: Logger
+) {
+
+    fun connectToDatabase(){
+        // Implementation code removed for better clarity.
+        /* In this method, the `logger` is also used because there might
+         be an exception occurring during the database connection process.*/
+    }
+
+    fun saveDataToDatabase() {
+        try {
+            // Implementation code removed for better clarity.
+            // Perform some operation that may throw an exception.
+        } catch (e: Exception) {
+            logger.log(e.message!!)
+        }
+    }
+
+}
+```
