@@ -77,6 +77,8 @@ Before:
 ```kotlin
 class PayCalculator(var currency: String) {
 
+    // We use currency in implementation.
+
     fun calculatePay(typeEmployee: TypeEmployee) {
         if (typeEmployee == TypeEmployee.FULL_TIME) {
             // Implementation code removed for better clarity
@@ -90,6 +92,8 @@ class PayCalculator(var currency: String) {
     }
 
     enum class TypeEmployee { FULL_TIME, PART_TIME, CONTRACTOR }
+
+   // Other methods
 }
 ```
 - The class isn't closed for modification because modifications are needed whenever a new employee type is added.
@@ -124,10 +128,14 @@ class ContractorPayable(var projectDuration:Double) : Payable {
 
 ```kotlin
 class PayCalculator(var currency: String) {
+
+    // We use currency in implementation.
+
     fun calculatePay(payable: Payable) {
         // Implementation code removed for better clarity
-        payable.calculatePay(currency)
+        payable.calculatePay()
     }
+   // Other methods
 }
 ```
 

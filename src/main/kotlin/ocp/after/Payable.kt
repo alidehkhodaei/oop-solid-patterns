@@ -1,5 +1,5 @@
 package ocp.after
 
 interface Payable{
-    fun calculatePay(currency: String)
+    fun calculatePay()
 }

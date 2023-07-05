@@ -2,6 +2,8 @@ package ocp.before
 
 class PayCalculator(var currency: String) {
 
+    // We use currency in implementation.
+
     fun calculatePay(typeEmployee: TypeEmployee) {
         if (typeEmployee == TypeEmployee.FULL_TIME) {
             // Implementation code removed for better clarity
@@ -15,4 +17,6 @@ class PayCalculator(var currency: String) {
     }
 
     enum class TypeEmployee { FULL_TIME, PART_TIME, CONTRACTOR }
+
+    // Other methods
 }
