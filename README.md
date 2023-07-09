@@ -140,7 +140,7 @@ class PayCalculator(var currency: String) {
 ```
 
 ## ✅Liskov’s Substitution Principle (Lsp): <a name="lsp"></a>
-Subtypes must be replaceable with their base types without affecting the correctness of the program. Overridng methods does not violate the Liskov Substitution Principle (LSP) because it does not change the behavior or functionality of the parent class. Overriding is simply replacing the implementation of a method from the parent class with a different implementation in the child class.
+Subtypes must be replaceable with their base types without affecting the correctness of the program.
 
 ![alt text](https://github.com/alidehkhodaei/solid-principles/raw/main/photos/lsp.png)
 
@@ -206,8 +206,6 @@ class Square(var side: Int) : Shape {
 ```
 ## ✅Interface Segregation Principle (Isp): <a name="isp"></a>
 Clients should not be forced to depend on interfaces they do not use.
-LSP (Liskov Substitution Principle) means not to change the functionality of the super class,
-while ISP (Interface Segregation Principle) says if you don't need a method, remove it from your class.
 
 Bad example
 ```kotlin
