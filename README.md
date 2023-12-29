@@ -385,7 +385,7 @@ class Square(var side: Int) : Shape {
 }
 ```
 #### <a name="isp">🟢 Interface Segregation Principle (Isp) </a>
-Clients should not be forced to depend on interfaces they do not use.
+Many client-specific interfaces are better than one general-purpose interface. Clients should not be forced to depend on interfaces they do not use.
 
 Bad example
 ```kotlin
